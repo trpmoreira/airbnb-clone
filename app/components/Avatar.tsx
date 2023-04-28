@@ -3,14 +3,20 @@
 import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 import Image from "next/image";
 
-const Avatar = () => {
+interface AvatarProps {
+    src?: string | null | undefined;
+}
+
+const Avatar: React.FC<AvatarProps> = ({
+    src
+}) => {
     return (
         <Image
             className="rounded-full"
             height={30}
             width={30}
             alt="User Avatar"
-            src="/images/placeholder.jpg"
+            src={src || "/images/placeholder.jpg"}
         />
     );
 }
