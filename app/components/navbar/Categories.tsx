@@ -12,7 +12,7 @@ import { FaSkiing } from 'react-icons/fa'
 import { BsSnow } from 'react-icons/bs'
 import { IoDiamond } from 'react-icons/io5'
 
-export const categories = () => [
+export const categories = [
     {
         label: 'Beach',
         icon: TbBeach,
@@ -88,7 +88,6 @@ export const categories = () => [
         icon: IoDiamond,
         description: 'This a luxury property'
     },
-
 ]
 
 const Categories = () => {
@@ -115,7 +114,7 @@ const Categories = () => {
             overflow-x-auto
             "
             >
-                {categories().map((item) => (
+                {categories.map((item) => (
                     <CategoryBox
                         key={item.label}
                         label={item.label}
