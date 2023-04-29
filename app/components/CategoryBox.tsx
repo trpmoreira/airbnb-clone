@@ -54,6 +54,7 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
         gap-2
         p-3
         border-b-2
+        hover:border-neutral-300
         hover:text-neutral-800
         transition
         cursor-pointer
