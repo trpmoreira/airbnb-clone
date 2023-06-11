@@ -21,7 +21,7 @@ export async function POST(
 
 
     if (!listingId || typeof listingId !== 'string') {
-        throw new Error('Invalid ID --');
+        throw new Error('Invalid ID');
     }
 
     let favoriteIds = [...(currentUser.favoriteIds || [])];
