@@ -4,8 +4,7 @@ import Container from "@/app/components/Container";
 import ListingHead from "@/app/components/listings/ListingHead";
 import ListingInfo from "@/app/components/listings/ListingInfo";
 import { categories } from "@/app/components/navbar/Categories";
-import { safeListing, safeUser } from "@/app/types";
-import { Reservation } from "@prisma/client";
+import { safeListing, safeReservation, safeUser } from "@/app/types";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import { useRouter } from "next/navigation";
 import ListingReservation from "@/app/components/listings/ListingReservation";
@@ -25,7 +24,7 @@ const initialDateRange = {
 };
 
 interface ListingClientProps {
-  reservations?: Reservation[];
+  reservations?: safeReservation[];
   listing: safeListing & {
     user: safeUser;
   };
@@ -59,11 +58,10 @@ const ListingClient: React.FC<ListingClientProps> = ({
   const [totalPrice, setTotalPrice] = useState(listing.price);
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
 
-  const onCreateReservation = useCallback(async () => {
+  const onCreateReservation = useCallback(() => {
     if (!currentUser) {
       return loginModal.onOpen();
     }
-
     setIsLoading(true);
 
     axios
@@ -74,18 +72,17 @@ const ListingClient: React.FC<ListingClientProps> = ({
         listingId: listing?.id,
       })
       .then(() => {
-        toast.success("Reservation created successfully");
+        toast.success("Listing reserved!");
         setDateRange(initialDateRange);
-        // Redirect to /trips
-        router.refresh();
+        router.push("/trips");
       })
       .catch(() => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong.");
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }, [totalPrice, dateRange, listing?.id, currentUser, router, loginModal]);
+  }, [totalPrice, dateRange, listing?.id, router, currentUser, loginModal]);
 
   useEffect(() => {
     if (dateRange.startDate && dateRange.endDate) {
